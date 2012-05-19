@@ -27,7 +27,8 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 
     @Override
     public String toTarget(Translator translator, Symbol symbol) {
-        List<String> classpathElements = getClasspathElements(symbol);
+
+        List<String> classpathElements = getClasspathElements(translator, symbol);
 
         String classpathForRender = "";
         for (String element : classpathElements) {
@@ -38,8 +39,8 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 
     }
 
-	private List<String> getClasspathElements(Symbol symbol) {
-        String pomFile = symbol.childAt(0).getContent();
+	private List<String> getClasspathElements(Translator translator, Symbol symbol) {
+      String pomFile = translator.translateTree(symbol);
 		String scope = MavenClasspathExtractor.DEFAULT_SCOPE;
 
 		if (pomFile.contains("@")) {
@@ -57,8 +58,8 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 
         if (!next.isType(SymbolType.Whitespace)) return Symbol.nothing;
 
-        symbol.add(parser.moveNext(1).getContent());
-
+       Symbol symbol1 = parser.parseTo(SymbolType.EndCell);
+       symbol.add(symbol1);
 
         return new Maybe<Symbol>(symbol);
     }
@@ -78,7 +79,7 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 
 	@Override
 	public Collection<String> providePaths(Translator translator, Symbol symbol) {
-		return getClasspathElements(symbol);
+		return getClasspathElements(translator, symbol);
 	}
 }
 
