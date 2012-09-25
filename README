@@ -9,6 +9,7 @@
     - Add the following line to plugins.properties: SymbolTypes = fitnesse.wikitext.widgets.MavenClasspathSymbolType.
     - Refer to the pom file as follows: !pomFile /path/to/pom.xml.
     - you can define the file as pom.xml@compile to include a specific scope.
+    - you can define the file as pom.xml@compile@profile1#profile2 to include a specific scope and the profiles.
 
     For v20101101 and earlier:
     - Download the 1.2 distribution.
