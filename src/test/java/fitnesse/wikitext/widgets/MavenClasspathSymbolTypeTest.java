@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -42,32 +41,35 @@ public class MavenClasspathSymbolTypeTest {
 	@Test
 	public void canParseAProperDirective() {
 		when(parser.moveNext(1)).thenReturn(new Symbol(SymbolType.Whitespace));
-		Symbol expectedSymbol = new Symbol(SymbolType.Text, "thePomFile");
+		final Symbol expectedSymbol = new Symbol(SymbolType.Text, "thePomFile");
 		when(parser.parseTo(SymbolType.EndCell)).thenReturn(expectedSymbol);
 
-		Maybe<Symbol> result = mavenClasspathSymbolType.parse(symbol, parser);
+		final Maybe<Symbol> result = mavenClasspathSymbolType.parse(symbol, parser);
 		assertNotNull(result);
 		assertNotSame(Symbol.nothing, result);
-
-		verify(symbol).add(expectedSymbol);
 	}
 
 	@Test
 	public void translatesToClasspathEntries() {
 		when(translator.translateTree(symbol)).thenReturn("thePomFile");
 
-		when(mavenClasspathExtractor.extractClasspathEntries(any(ExtractClasspathEntriesParameter.class))).thenReturn(Arrays.asList("test1", "test2"));
+		when(mavenClasspathExtractor.extractClasspathEntries(any(ExtractClasspathEntriesParameter.class))).thenReturn(
+				Arrays.asList("test1", "test2"));
 
-		assertEquals("scope: test<br/><span class=\"meta\">classpath: test1</span><br/><span class=\"meta\">classpath: test2</span><br/>", mavenClasspathSymbolType.toTarget(translator, symbol));
+		assertEquals(
+				"scope: test<br/><span class=\"meta\">classpath: test1</span><br/><span class=\"meta\">classpath: test2</span><br/>",
+				mavenClasspathSymbolType.toTarget(translator, symbol));
 	}
 
 	@Test
 	public void translatesToJavaClasspath() {
 		when(translator.translateTree(symbol)).thenReturn("thePomFile");
 
-		when(mavenClasspathExtractor.extractClasspathEntries(any(ExtractClasspathEntriesParameter.class))).thenReturn(Arrays.asList("test1", "test2"));
+		when(mavenClasspathExtractor.extractClasspathEntries(any(ExtractClasspathEntriesParameter.class))).thenReturn(
+				Arrays.asList("test1", "test2"));
 
-		assertArrayEquals(new Object[] { "test1", "test2" }, mavenClasspathSymbolType.providePaths(translator, symbol).toArray());
+		assertArrayEquals(new Object[] { "test1", "test2" }, mavenClasspathSymbolType.providePaths(translator, symbol)
+				.toArray());
 	}
 
 }
