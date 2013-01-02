@@ -8,9 +8,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jvnet.hudson</groupId>
-            <artifactId>hudson-maven-embedder</artifactId>
-            <version>3.2</version>
+            <groupId>org.jenkins-ci.lib</groupId>
+            <artifactId>lib-jenkins-maven-embedder</artifactId>
+            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>org.fitnesse</groupId>
@@ -37,6 +37,11 @@
             <id>os-xebia</id>
             <name>Xebia Open Source Repository</name>
             <url>http://os.xebia.com/repository/</url>
+        </repository>
+        <repository>
+            <id>opencastproject</id>
+            <name>opencastproject</name>
+            <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
         </repository>
 
         <repository>
