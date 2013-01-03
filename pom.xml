@@ -8,9 +8,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jenkins-ci.lib</groupId>
-            <artifactId>lib-jenkins-maven-embedder</artifactId>
-            <version>3.9</version>
+            <groupId>org.jvnet.hudson</groupId>
+            <artifactId>hudson-maven-embedder</artifactId>
+            <version>3.2</version>
         </dependency>
         <dependency>
             <groupId>org.fitnesse</groupId>
@@ -32,23 +32,23 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>os-xebia</id>
-            <name>Xebia Open Source Repository</name>
-            <url>http://os.xebia.com/repository/</url>
-        </repository>
-        <repository>
-            <id>opencastproject</id>
-            <name>opencastproject</name>
-            <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
-        </repository>
+<!--     <repositories> -->
+<!--         <repository> -->
+<!--             <id>os-xebia</id> -->
+<!--             <name>Xebia Open Source Repository</name> -->
+<!--             <url>http://os.xebia.com/repository/</url> -->
+<!--         </repository> -->
+<!--         <repository> -->
+<!--             <id>opencastproject</id> -->
+<!--             <name>opencastproject</name> -->
+<!--             <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url> -->
+<!--         </repository> -->
 
-        <repository>
-            <id>fitnesse-local</id>
-            <url>file://${basedir}/src/fitnesse</url>
-        </repository>
-    </repositories>
+<!--         <repository> -->
+<!--             <id>fitnesse-local</id> -->
+<!--             <url>file://${basedir}/src/fitnesse</url> -->
+<!--         </repository> -->
+<!--     </repositories> -->
 
     <build>
         <plugins>
