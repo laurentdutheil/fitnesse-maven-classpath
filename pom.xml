@@ -10,7 +10,7 @@
         <dependency>
             <groupId>org.jvnet.hudson</groupId>
             <artifactId>hudson-maven-embedder</artifactId>
-            <version>3.2</version>
+            <version>3.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.fitnesse</groupId>
@@ -32,7 +32,7 @@
         </dependency>
     </dependencies>
 
-<!--     <repositories> -->
+    <repositories>
 <!--         <repository> -->
 <!--             <id>os-xebia</id> -->
 <!--             <name>Xebia Open Source Repository</name> -->
@@ -44,11 +44,11 @@
 <!--             <url>http://repository.opencastproject.org/nexus/content/repositories/public/</url> -->
 <!--         </repository> -->
 
-<!--         <repository> -->
-<!--             <id>fitnesse-local</id> -->
-<!--             <url>file://${basedir}/src/fitnesse</url> -->
-<!--         </repository> -->
-<!--     </repositories> -->
+        <repository>
+            <id>fitnesse-local</id>
+            <url>file://${basedir}/src/fitnesse</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
