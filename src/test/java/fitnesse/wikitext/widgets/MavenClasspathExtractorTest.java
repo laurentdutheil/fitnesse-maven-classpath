@@ -34,7 +34,7 @@ public class MavenClasspathExtractorTest {
 
 		final String path = sb.toString();
 
-		assertEquals(3, classpathEntries.size());
+		assertEquals(4, classpathEntries.size());
 		assertTrue(path.contains("commons-lang"));
 	}
 
@@ -49,7 +49,7 @@ public class MavenClasspathExtractorTest {
 
 		final String path = sb.toString();
 
-		assertEquals(1, classpathEntries.size());
+		assertEquals(2, classpathEntries.size());
 		assertFalse(path.contains("commons-lang"));
 	}
 
@@ -65,7 +65,7 @@ public class MavenClasspathExtractorTest {
 
 		final String path = sb.toString();
 
-		assertEquals(1, classpathEntries.size());
+		assertEquals(3, classpathEntries.size());
 		assertFalse(path.contains("commons-lang"));
 		//		assertTrue(path.contains("fitnesse-subdep"));
 	}

@@ -64,6 +64,7 @@ import org.sonatype.aether.RepositorySystemSession;
  * it's behavior. Only change is the addition of buildProject which builds the project using dependency resolution.
  */
 public class DependencyResolvingMavenEmbedder {
+
 	public static final String userHome = System.getProperty("user.home");
 
 	private MavenXpp3Reader modelReader;
@@ -141,8 +142,9 @@ public class DependencyResolvingMavenEmbedder {
 		// TODO check null and create a console one ?
 		this.mavenExecutionRequest.setTransferListener(this.mavenRequest.getTransferListener());
 
-		this.mavenExecutionRequest.setCacheNotFound(this.mavenRequest.isCacheNotFound());
-		this.mavenExecutionRequest.setCacheTransferError(true);
+		//		this.mavenExecutionRequest.setCacheNotFound(this.mavenRequest.isCacheNotFound());
+		this.mavenExecutionRequest.setCacheNotFound(false);
+		this.mavenExecutionRequest.setCacheTransferError(false);
 
 		this.mavenExecutionRequest.setUserProperties(this.mavenRequest.getUserProperties());
 		this.mavenExecutionRequest.getSystemProperties().putAll(System.getProperties());
