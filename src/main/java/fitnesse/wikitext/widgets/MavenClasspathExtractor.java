@@ -19,6 +19,7 @@ import org.codehaus.plexus.component.repository.exception.ComponentLookupExcepti
 public class MavenClasspathExtractor {
 
 	public final static String DEFAULT_SCOPE = "test";
+	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 
 	private File userSettingsFile;
 	private File globalSettingsFile;
@@ -73,14 +74,22 @@ public class MavenClasspathExtractor {
 	// protected for test purposes
 	protected MavenRequest mavenConfiguration() throws MavenEmbedderException, ComponentLookupException {
 		MavenRequest mavenRequest = new MavenRequest();
-		globalSettingsFile = new File(System.getenv("MAVEN_HOME") + '/' + "conf" + '/' + "settings.xml");
-		userSettingsFile = new File(System.getenv("HOME") + '/' + ".m2" + '/' + "settings.xml");
+		globalSettingsFile = new File(System.getenv("MAVEN_HOME") + FILE_SEPARATOR + "conf" + FILE_SEPARATOR
+				+ "settings.xml");
+		if (!globalSettingsFile.exists())
+			globalSettingsFile = new File(System.getenv("M2_HOME") + FILE_SEPARATOR + "conf" + FILE_SEPARATOR
+					+ "settings.xml");
+		if (!globalSettingsFile.exists())
+			globalSettingsFile = new File(System.getenv("M3_HOME") + FILE_SEPARATOR + "conf" + FILE_SEPARATOR
+					+ "settings.xml");
 
-		if (userSettingsFile != null && userSettingsFile.exists()) {
-			mavenRequest.setUserSettingsFile(userSettingsFile.getAbsolutePath());
-		}
+		userSettingsFile = new File(System.getenv("user.home") + FILE_SEPARATOR + ".m2" + FILE_SEPARATOR + "settings.xml");
+
 		if (globalSettingsFile != null && globalSettingsFile.exists()) {
 			mavenRequest.setGlobalSettingsFile(globalSettingsFile.getAbsolutePath());
+		}
+		if (userSettingsFile != null && userSettingsFile.exists()) {
+			mavenRequest.setUserSettingsFile(userSettingsFile.getAbsolutePath());
 		}
 
 		DependencyResolvingMavenEmbedder mavenEmbedder = new DependencyResolvingMavenEmbedder(
