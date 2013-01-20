@@ -6,8 +6,10 @@
 
     - Download the distribution.
     - Get yourself an up-to-date copy of fitnesse (> 20110601)
-    - Add the following line to plugins.properties: SymbolTypes = fitnesse.wikitext.widgets.MavenClasspathSymbolType.
-    - Refer to the pom file as follows: !pomFile /path/to/pom.xml.
+    - Add the following line to plugins.properties: SymbolTypes = fitnesse.wikitext.widgets.MavenClasspathSymbolType
+    	 (if the file doesn't exist create it in the same directory as fitnesse.jar).
+    - Copy this jar file in the directory plugins same directory as fitnesse.jar (create this directory if needed)
+    - Refer to the pom file as follows: !pomFile /path/to/pom.xml or !pomFile ${your_path}/to/pom.xml.
     - you can define the file as pom.xml@compile to include a specific scope.
     - you can define the file as pom.xml@compile@profile1#profile2 to include a specific scope and the profiles.
 
