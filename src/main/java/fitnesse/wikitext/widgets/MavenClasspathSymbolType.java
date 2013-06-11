@@ -35,19 +35,19 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 	}
 
 	@Override
-	public String toTarget(Translator translator, Symbol symbol) {
+	public String toTarget(final Translator translator, final Symbol symbol) {
 
-		ExtractClasspathEntriesParameter parameter = parseParameters(translator, symbol);
-		List<String> classpathElements = mavenClasspathExtractor.extractClasspathEntries(parameter);
+		final ExtractClasspathEntriesParameter parameter = parseParameters(translator, symbol);
+		final List<String> classpathElements = mavenClasspathExtractor.extractClasspathEntries(parameter);
 
-		StringBuilder classpathForRender = new StringBuilder();
+		final StringBuilder classpathForRender = new StringBuilder();
 		classpathForRender.append("scope: ").append(parameter.scope).append(HtmlUtil.BRtag);
 		if (parameter.profiles != null) {
-			for (String profile : parameter.profiles) {
+			for (final String profile : parameter.profiles) {
 				classpathForRender.append("profile: ").append(profile).append(HtmlUtil.BRtag);
 			}
 		}
-		for (String element : classpathElements) {
+		for (final String element : classpathElements) {
 			classpathForRender.append(HtmlUtil.metaText("classpath: " + element)).append(HtmlUtil.BRtag);
 
 		}
@@ -55,7 +55,7 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 
 	}
 
-	private ExtractClasspathEntriesParameter parseParameters(Translator translator, Symbol symbol) {
+	private ExtractClasspathEntriesParameter parseParameters(final Translator translator, final Symbol symbol) {
 		String pomFile = translator.translateTree(symbol);
 		if (pomFile.endsWith("<br/>")) {
 			pomFile = pomFile.substring(0, pomFile.length() - 5);
@@ -64,7 +64,7 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 		List<String> profiles = null;
 
 		if (pomFile.contains("@")) {
-			String[] s = pomFile.split("@");
+			final String[] s = pomFile.split("@");
 			pomFile = s[0];
 			scope = s[1];
 			if (s.length > 2) {
@@ -72,47 +72,48 @@ public class MavenClasspathSymbolType extends SymbolType implements Rule, Transl
 			}
 		}
 
-		ExtractClasspathEntriesParameter parameter = new ExtractClasspathEntriesParameter(new File(pomFile), scope, profiles);
+		final ExtractClasspathEntriesParameter parameter = new ExtractClasspathEntriesParameter(new File(pomFile), scope,
+				profiles);
 		return parameter;
 	}
 
-	private List<String> extractProfiles(String profiles) {
+	private List<String> extractProfiles(final String profiles) {
 		if (profiles.contains("#")) {
-			String[] profilesArray = profiles.split("#");
+			final String[] profilesArray = profiles.split("#");
 			return Arrays.asList(profilesArray);
 		}
 		return Arrays.asList(profiles);
 	}
 
 	@Override
-	public Maybe<Symbol> parse(Symbol symbol, Parser parser) {
-		Symbol next = parser.moveNext(1);
+	public Maybe<Symbol> parse(final Symbol symbol, final Parser parser) {
+		final Symbol next = parser.moveNext(1);
 
 		if (!next.isType(SymbolType.Whitespace)) {
 			return Symbol.nothing;
 		}
 
-		Symbol symbol1 = parser.parseTo(SymbolType.EndCell);
+		final Symbol symbol1 = parser.parseTo(SymbolType.Newline);
 		symbol.add(symbol1);
 
 		return new Maybe<Symbol>(symbol);
 	}
 
 	@Override
-	public boolean matchesFor(SymbolType symbolType) {
+	public boolean matchesFor(final SymbolType symbolType) {
 		return symbolType instanceof Path || super.matchesFor(symbolType);
 	}
 
 	/**
 	 * Exposed for testing
 	 */
-	protected void setMavenClasspathExtractor(MavenClasspathExtractor mavenClasspathExtractor) {
+	protected void setMavenClasspathExtractor(final MavenClasspathExtractor mavenClasspathExtractor) {
 		this.mavenClasspathExtractor = mavenClasspathExtractor;
 	}
 
 	@Override
-	public Collection<String> providePaths(Translator translator, Symbol symbol) {
-		ExtractClasspathEntriesParameter parameter = parseParameters(translator, symbol);
+	public Collection<String> providePaths(final Translator translator, final Symbol symbol) {
+		final ExtractClasspathEntriesParameter parameter = parseParameters(translator, symbol);
 		return mavenClasspathExtractor.extractClasspathEntries(parameter);
 	}
 }
